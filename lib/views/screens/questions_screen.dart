@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/components/answer_button.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import '../components/answer_button.dart';
+import 'package:quiz_app/controllers/quiz_controller.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({
@@ -23,6 +23,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   List<Map<String, dynamic>>? questions;
   bool loading = true;
   String? error;
+  final QuizController _quizController = QuizController();
 
   @override
   void initState() {
@@ -36,9 +37,9 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
       error = null;
     });
     try {
-      final res = await Supabase.instance.client.from('qus').select();
+      final res = await _quizController.fetchQuestions();
       setState(() {
-        questions = List<Map<String, dynamic>>.from(res);
+        questions = res;
         loading = false;
       });
     } catch (e) {

@@ -71,7 +71,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
                   onChanged: (val) => setState(() => _answerIndex = val),
                   title: TextFormField(
                     controller: _choiceControllers[i],
-                    decoration: InputDecoration(labelText: 'Choice ${i + 1}'),
+                    decoration: InputDecoration(labelText: 'Choice ${i + 1}'),
                     validator: (v) =>
                         v == null || v.isEmpty ? 'Required' : null,
                   ),
@@ -95,3 +95,5 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
     );
   }
 }
+
+// Placeholder for add_question_screen.dart (to be moved here)

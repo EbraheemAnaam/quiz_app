@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AnswerButton extends StatelessWidget {
-  const AnswerButton({
-    super.key,
-    required this.text,
-    required this.onTap,
-  });
+  const AnswerButton({super.key, required this.text, required this.onTap});
 
   final String text;
   final void Function() onTap;
@@ -14,10 +10,7 @@ class AnswerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-      ),
+      child: Text(text, textAlign: TextAlign.center),
     );
   }
 }

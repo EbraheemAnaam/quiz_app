@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/data/questions.dart';
-import 'package:quiz_app/screens/questions_screen.dart';
-import 'package:quiz_app/screens/results_screen.dart';
-import 'package:quiz_app/screens/start_screen.dart';
+// import 'package:quiz_app/data/questions.dart';
+import 'package:quiz_app/views/screens/questions_screen.dart';
+import 'package:quiz_app/views/screens/results_screen.dart';
+import 'package:quiz_app/views/screens/start_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:quiz_app/screens/auth_screen.dart';
-import 'package:quiz_app/screens/add_question_screen.dart';
-import 'package:quiz_app/components/profile_drawer.dart';
+import 'package:quiz_app/views/screens/auth_screen.dart';
+import 'package:quiz_app/views/screens/add_question_screen.dart';
+import 'package:quiz_app/views/components/profile_drawer.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});

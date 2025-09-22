@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/components/questions_summary.dart';
+import '../components/questions_summary.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ResultsScreen extends StatefulWidget {
@@ -20,13 +20,20 @@ class _ResultsScreenState extends State<ResultsScreen> {
   Future<List<Map<String, Object>>> getSummaryData() async {
     final List<Map<String, Object>> summary = [];
     final res = await Supabase.instance.client.from('qus').select();
-    final List<Map<String, dynamic>> supabaseQuestions = List<Map<String, dynamic>>.from(res);
+    final List<Map<String, dynamic>> supabaseQuestions =
+        List<Map<String, dynamic>>.from(res);
     for (var i = 0; i < widget.chosenAnswers.length; i++) {
       final q = i < supabaseQuestions.length ? supabaseQuestions[i] : null;
       summary.add({
         'questions_index': i,
         'question': q != null ? (q['q'] ?? '') : '',
-        'correct_answer': q != null && q['c'] != null && q['a'] != null && (q['a'] as int) < (q['c'] as List).length ? (q['c'][q['a']] ?? '') : '',
+        'correct_answer':
+            q != null &&
+                q['c'] != null &&
+                q['a'] != null &&
+                (q['a'] as int) < (q['c'] as List).length
+            ? (q['c'][q['a']] ?? '')
+            : '',
         'user_answer': widget.chosenAnswers[i],
       });
     }
@@ -94,3 +101,5 @@ class _ResultsScreenState extends State<ResultsScreen> {
     );
   }
 }
+
+// Placeholder for results_screen.dart (to be moved here)
