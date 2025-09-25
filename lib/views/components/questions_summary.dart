@@ -8,7 +8,7 @@ class QuestionsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = const Color(0xFF7A46D4);
+    final themeColor = const Color.fromARGB(255, 65, 67, 168);
     return SizedBox(
       height: 340,
       child: SingleChildScrollView(

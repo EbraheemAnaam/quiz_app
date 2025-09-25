@@ -81,11 +81,16 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
 
     final totalQuestions = questions!.length;
     final progress = currentQuestionIndex + 1;
-    final themeColor = const Color(0xFF7A46D4);
+
+    final themeColor = const Color(0xFF1976D2); // Light blue primary
     final bgGradient = const LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF7A46D4), Color(0xFF512DA8), Color(0xFFB39DDB)],
+      colors: [
+        Color(0xFFBBDEFB), // Light blue 100
+        Color(0xFF90CAF9), // Light blue 200
+        Color(0xFF1976D2), // Blue 700
+      ],
     );
 
     return LayoutBuilder(
@@ -105,27 +110,27 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Progress Indicator
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 18),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    // Progress Bar
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 18.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 18,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.15),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
+                          LinearProgressIndicator(
+                            value: progress / totalQuestions,
+                            backgroundColor: Colors.white.withOpacity(0.25),
+                            color: themeColor,
+                            minHeight: 8,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          const SizedBox(height: 8),
+                          Center(
                             child: Text(
-                              'Question $progress of $totalQuestions',
+                              'سؤال $progress من $totalQuestions',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
-                                fontSize: isTablet ? 20 : 15,
+                                fontSize: isTablet ? 18 : 14,
                                 letterSpacing: 1.1,
                                 fontFamily: 'Roboto',
                               ),
@@ -134,6 +139,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(height: isTablet ? 24 : 12),
                     // Question Card
                     Card(
                       elevation: 10,

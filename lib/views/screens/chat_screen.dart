@@ -53,11 +53,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = const Color(0xFF7A46D4);
+    final themeColor = const Color.fromARGB(255, 7, 116, 224);
     final bgGradient = const LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [Color(0xFF7A46D4), Color(0xFF512DA8), Color(0xFFB39DDB)],
+      colors: [Color.fromARGB(255, 48, 128, 209), Color.fromARGB(255, 10, 104, 197), Color.fromARGB(255, 134, 174, 228)],
     );
     return Scaffold(
       appBar: AppBar(
@@ -88,10 +88,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       children: [
                         if (!isUser)
                           CircleAvatar(
-                            backgroundColor: themeColor.withOpacity(0.15),
+                            backgroundColor: themeColor.withValues(alpha: 0.15),
                             child: const Icon(
                               Icons.smart_toy,
-                              color: Color(0xFF7A46D4),
+                              color: Color(0xFF1976D2),
                             ),
                           ),
                         Flexible(
@@ -151,7 +151,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             backgroundColor: themeColor.withOpacity(0.15),
                             child: const Icon(
                               Icons.person,
-                              color: Color(0xFF7A46D4),
+                              color: Color(0xFF1976D2),
                             ),
                           ),
                       ],
@@ -204,7 +204,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: themeColor.withOpacity(0.18),
+                            color: themeColor.withValues(alpha: 0.18),
                             blurRadius: 6,
                             offset: const Offset(0, 2),
                           ),

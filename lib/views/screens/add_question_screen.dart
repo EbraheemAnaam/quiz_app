@@ -49,7 +49,7 @@ class _AddQuestionScreenState extends State<AddQuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeColor = const Color(0xFF7A46D4);
+    final themeColor = const Color(0xFF1976D2);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Question'),

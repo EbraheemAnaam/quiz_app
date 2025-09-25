@@ -7,9 +7,11 @@ class ResultsScreen extends StatefulWidget {
     super.key,
     required this.chosenAnswers,
     required this.onRestart,
+    required this.onGoHome,
   });
 
   final void Function() onRestart;
+  final void Function() onGoHome;
   final List<String> chosenAnswers;
 
   @override
@@ -66,9 +68,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
         // حفظ النتيجة في profiles
         setUserScore(numCorrectQuestions);
 
-        final themeColor = const Color(0xFF7A46D4);
-        final correctColor = Colors.green[400]!;
-        final wrongColor = Colors.red[400]!;
+        final themeColor = const Color.fromRGBO(41, 114, 182, 1);
+        // Removed unused correctColor and wrongColor variables
         final bgColor = Colors.white;
         final isTablet = MediaQuery.of(context).size.width > 600;
 
@@ -194,11 +195,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           elevation: 2,
                         ),
                         icon: const Icon(Icons.home),
-                        onPressed: () {
-                          Navigator.of(
-                            context,
-                          ).popUntil((route) => route.isFirst);
-                        },
+                        onPressed: widget.onGoHome,
                         label: const Text('Go Home'),
                       ),
                     ],

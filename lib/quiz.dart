@@ -6,7 +6,7 @@ import 'package:quiz_app/views/screens/start_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:quiz_app/views/screens/auth_screen.dart';
 import 'package:quiz_app/views/screens/add_question_screen.dart';
-import 'package:quiz_app/views/screens/chat_screen.dart';
+// import 'package:quiz_app/views/screens/chat_screen.dart';
 import 'package:quiz_app/views/components/profile_drawer.dart';
 
 class Quiz extends StatefulWidget {
@@ -60,6 +60,12 @@ class _QuizState extends State<Quiz> {
       screenWidget = ResultsScreen(
         chosenAnswers: selectedAnswers,
         onRestart: restartQuiz,
+        onGoHome: () {
+          setState(() {
+            activeScreen = 'start-screen';
+            selectedAnswers = [];
+          });
+        },
       );
     }
 
@@ -67,21 +73,44 @@ class _QuizState extends State<Quiz> {
       debugShowCheckedModeBanner: false,
       home: Builder(
         builder: (context) => Scaffold(
-          drawer: ProfileDrawer(),
+          drawer: const ProfileDrawer(),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 4,
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: const Icon(Icons.menu, color: Color(0xFF1976D2)),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+                tooltip: 'Menu',
+              ),
+            ),
+            title: const Text(
+              'Quiz App',
+              style: TextStyle(
+                color: Color(0xFF1976D2),
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                letterSpacing: 1.2,
+              ),
+            ),
+            centerTitle: true,
+          ),
           body: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color.fromARGB(255, 122, 70, 212),
-                  Color.fromARGB(255, 71, 38, 128),
+                  Color(0xFFBBDEFB),
+                  Color(0xFF90CAF9),
+                  Color(0xFF1976D2),
                 ],
               ),
             ),
             child: screenWidget,
           ),
           floatingActionButton: FloatingActionButton(
+            backgroundColor: const Color.fromARGB(255, 252, 253, 255),
             onPressed: () async {
               // تحقق من حالة تسجيل الدخول باستخدام supabase
               final session =
