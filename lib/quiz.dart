@@ -6,6 +6,7 @@ import 'package:quiz_app/views/screens/start_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:quiz_app/views/screens/auth_screen.dart';
 import 'package:quiz_app/views/screens/add_question_screen.dart';
+import 'package:quiz_app/views/screens/chat_screen.dart';
 import 'package:quiz_app/views/components/profile_drawer.dart';
 
 class Quiz extends StatefulWidget {
@@ -66,7 +67,7 @@ class _QuizState extends State<Quiz> {
       debugShowCheckedModeBanner: false,
       home: Builder(
         builder: (context) => Scaffold(
-          drawer: const ProfileDrawer(),
+          drawer: ProfileDrawer(),
           body: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(

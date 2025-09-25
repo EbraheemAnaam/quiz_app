@@ -66,34 +66,145 @@ class _ResultsScreenState extends State<ResultsScreen> {
         // حفظ النتيجة في profiles
         setUserScore(numCorrectQuestions);
 
-        return SizedBox(
-          width: double.infinity,
-          child: Container(
-            margin: const EdgeInsets.all(40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  textAlign: TextAlign.center,
-                  'You answered $numCorrectQuestions out of $numTotalQuestions questions correctly!',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+        final themeColor = const Color(0xFF7A46D4);
+        final correctColor = Colors.green[400]!;
+        final wrongColor = Colors.red[400]!;
+        final bgColor = Colors.white;
+        final isTablet = MediaQuery.of(context).size.width > 600;
+
+        return Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: isTablet ? 80 : 16,
+                vertical: isTablet ? 40 : 16,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Score Card
+                  Card(
+                    color: themeColor,
+                    elevation: 8,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 32,
+                        horizontal: 24,
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Quiz Completed!',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: isTablet ? 28 : 20,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.1,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 24,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(32),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: themeColor.withOpacity(0.15),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Text(
+                              '$numCorrectQuestions / $numTotalQuestions',
+                              style: TextStyle(
+                                color: themeColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: isTablet ? 28 : 20,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Correct Answers',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: isTablet ? 16 : 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                QuestionsSummary(summary),
-                const SizedBox(height: 30),
-                OutlinedButton.icon(
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
+                  const SizedBox(height: 32),
+                  // Summary Card
+                  Card(
+                    color: bgColor,
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: QuestionsSummary(summary),
+                    ),
                   ),
-                  icon: const Icon(Icons.restart_alt),
-                  onPressed: widget.onRestart,
-                  label: const Text('Restart Quiz!'),
-                ),
-              ],
+                  const SizedBox(height: 32),
+                  // Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColor,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 14,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          elevation: 4,
+                        ),
+                        icon: const Icon(Icons.restart_alt),
+                        onPressed: widget.onRestart,
+                        label: const Text('Restart Quiz'),
+                      ),
+                      const SizedBox(width: 16),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey[200],
+                          foregroundColor: themeColor,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 14,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          elevation: 2,
+                        ),
+                        icon: const Icon(Icons.home),
+                        onPressed: () {
+                          Navigator.of(
+                            context,
+                          ).popUntil((route) => route.isFirst);
+                        },
+                        label: const Text('Go Home'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );

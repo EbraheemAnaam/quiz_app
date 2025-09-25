@@ -79,34 +79,130 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
     final String questionText = current['q'] ?? '';
     final List choices = current['c'] ?? [];
 
-    return Center(
-      child: Container(
-        margin: const EdgeInsets.all(40),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              textAlign: TextAlign.center,
-              questionText,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+    final totalQuestions = questions!.length;
+    final progress = currentQuestionIndex + 1;
+    final themeColor = const Color(0xFF7A46D4);
+    final bgGradient = const LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [Color(0xFF7A46D4), Color(0xFF512DA8), Color(0xFFB39DDB)],
+    );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isTablet = constraints.maxWidth > 600;
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(gradient: bgGradient),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 60 : 12,
+                  vertical: isTablet ? 40 : 16,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Progress Indicator
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 18,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Text(
+                              'Question $progress of $totalQuestions',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: isTablet ? 20 : 15,
+                                letterSpacing: 1.1,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Question Card
+                    Card(
+                      elevation: 10,
+                      shadowColor: themeColor.withOpacity(0.25),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      color: Colors.white,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: isTablet ? 32 : 18,
+                          vertical: isTablet ? 32 : 18,
+                        ),
+                        child: Text(
+                          questionText,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: themeColor,
+                            fontSize: isTablet ? 28 : 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    // Answer Options
+                    ...choices.map<Widget>((answer) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Material(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                          elevation: 5,
+                          shadowColor: themeColor.withOpacity(0.18),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(18),
+                            splashColor: themeColor.withOpacity(0.13),
+                            highlightColor: themeColor.withOpacity(0.07),
+                            onTap: () => answerQuestion(answer.toString()),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: isTablet ? 22 : 16,
+                                horizontal: isTablet ? 18 : 12,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  answer.toString(),
+                                  style: TextStyle(
+                                    color: themeColor,
+                                    fontSize: isTablet ? 20 : 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 30),
-            ...choices.map((answer) {
-              return AnswerButton(
-                text: answer.toString(),
-                onTap: () {
-                  answerQuestion(answer.toString());
-                },
-              );
-            }),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

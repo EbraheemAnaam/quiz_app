@@ -10,9 +10,11 @@ class ProfileDrawer extends StatelessWidget {
     final res = await Supabase.instance.client
         .from('profiles')
         .select()
-        .eq('user_id', user.id)
-        .maybeSingle();
-    return res;
+        .eq('user_id', user.id);
+    if (res.isNotEmpty) {
+      return res.last;
+    }
+    return null;
   }
 
   @override
@@ -21,25 +23,45 @@ class ProfileDrawer extends StatelessWidget {
       child: FutureBuilder<Map<String, dynamic>?>(
         future: fetchProfile(),
         builder: (context, snapshot) {
+          final user = Supabase.instance.client.auth.currentUser;
           if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
+            return ListView(
+              padding: EdgeInsets.zero,
+              children: const [
+                UserAccountsDrawerHeader(
+                  accountName: Text(''),
+                  accountEmail: Text(''),
+                  currentAccountPicture: CircleAvatar(
+                    child: Icon(Icons.person),
+                  ),
+                ),
+                ListTile(title: Text('Loading...')),
+              ],
+            );
           }
           final profile = snapshot.data;
-          final user = Supabase.instance.client.auth.currentUser;
           return ListView(
             padding: EdgeInsets.zero,
             children: [
               UserAccountsDrawerHeader(
-                accountName: Text(profile?['id'] ?? ''),
+                accountName: const Text(''),
                 accountEmail: Text(user?.email ?? ''),
                 currentAccountPicture: const CircleAvatar(
                   child: Icon(Icons.person),
                 ),
               ),
               ListTile(
-                leading: const Icon(Icons.score),
-                title: Text('Score: ${profile?['score'] ?? 'N/A'}'),
+                leading: const Icon(Icons.chat),
+                title: const Text('محادثة الذكاء الاصطناعي'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/chat');
+                },
               ),
+              ListTile(
+                leading: const Icon(Icons.score),
+                title: Text('Score: 0${profile?['score'] ?? 'N/A'}'),
+              ),
+              const Divider(),
               ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
